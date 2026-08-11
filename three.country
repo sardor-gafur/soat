@@ -1,0 +1,292 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>World Clock</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .title p {
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        .clocks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .clock {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 35px 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .clock:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .flag {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .country {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .city {
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .time {
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .date {
+            margin-top: 12px;
+            color: #cbd5e1;
+            font-size: 15px;
+        }
+
+        .difference {
+            margin-top: 20px;
+            padding: 8px 15px;
+            display: inline-block;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.08);
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        @media (max-width: 800px) {
+            .clocks {
+                grid-template-columns: 1fr;
+            }
+
+            .title h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="title">
+            <h1>🌍 World Clock</h1>
+            <p>O‘zbekiston, Koreya va Polsha vaqti</p>
+        </div>
+
+        <div class="clocks">
+
+            <!-- Uzbekistan -->
+            <div class="clock">
+                <div class="flag">🇺🇿</div>
+
+                <div class="country">
+                    O‘zbekiston
+                </div>
+
+                <div class="city">
+                    Toshkent
+                </div>
+
+                <div class="time" id="uz-time">
+                    00:00:00
+                </div>
+
+                <div class="date" id="uz-date">
+                    Loading...
+                </div>
+
+                <div class="difference">
+                    UTC +5
+                </div>
+            </div>
+
+
+            <!-- Korea -->
+            <div class="clock">
+                <div class="flag">🇰🇷</div>
+
+                <div class="country">
+                    Janubiy Koreya
+                </div>
+
+                <div class="city">
+                    Seul
+                </div>
+
+                <div class="time" id="kr-time">
+                    00:00:00
+                </div>
+
+                <div class="date" id="kr-date">
+                    Loading...
+                </div>
+
+                <div class="difference">
+                    UTC +9
+                </div>
+            </div>
+
+
+            <!-- Poland -->
+            <div class="clock">
+                <div class="flag">🇵🇱</div>
+
+                <div class="country">
+                    Polsha
+                </div>
+
+                <div class="city">
+                    Varshava
+                </div>
+
+                <div class="time" id="pl-time">
+                    00:00:00
+                </div>
+
+                <div class="date" id="pl-date">
+                    Loading...
+                </div>
+
+                <div class="difference">
+                    Europe/Warsaw
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function updateClock() {
+
+            const now = new Date();
+
+
+            // Uzbekistan
+            const uzTime = new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Asia/Tashkent",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false
+            }).format(now);
+
+            const uzDate = new Intl.DateTimeFormat("uz-UZ", {
+                timeZone: "Asia/Tashkent",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }).format(now);
+
+
+            // Korea
+            const krTime = new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Asia/Seoul",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false
+            }).format(now);
+
+            const krDate = new Intl.DateTimeFormat("uz-UZ", {
+                timeZone: "Asia/Seoul",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }).format(now);
+
+
+            // Poland
+            const plTime = new Intl.DateTimeFormat("en-GB", {
+                timeZone: "Europe/Warsaw",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false
+            }).format(now);
+
+            const plDate = new Intl.DateTimeFormat("uz-UZ", {
+                timeZone: "Europe/Warsaw",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }).format(now);
+
+
+            // HTML ga chiqarish
+            document.getElementById("uz-time").textContent = uzTime;
+            document.getElementById("uz-date").textContent = uzDate;
+
+            document.getElementById("kr-time").textContent = krTime;
+            document.getElementById("kr-date").textContent = krDate;
+
+            document.getElementById("pl-time").textContent = plTime;
+            document.getElementById("pl-date").textContent = plDate;
+        }
+
+
+        // Birinchi marta ishga tushirish
+        updateClock();
+
+        // Har 1 sekundda yangilash
+        setInterval(updateClock, 1000);
+
+    </script>
+
+</body>
+</html>
+```
